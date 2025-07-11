@@ -1,13 +1,17 @@
 from fastapi import FastAPI
-from app.routes import predict
+from fastapi.middleware.cors import CORSMiddleware
+from app.routes.predict import router as predict_router  # ✅ Add this
 
-app = FastAPI(
-    title="F1 Pre-Race Simulation API",
-    version="1.0"
+app = FastAPI()
+
+# ✅ Register the predict routes under /predict
+app.include_router(predict_router, prefix="/predict")
+
+# ✅ CORS setup
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # You can restrict to frontend domain later
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
-
-app.include_router(predict.router)
-
-@app.get("/")
-def read_root():
-    return {"message": "Welcome to the F1 Simulation API"}
