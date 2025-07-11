@@ -5,7 +5,7 @@ from app.routes.predict import router as predict_router  # ✅ Add this
 app = FastAPI()
 
 # ✅ Register the predict routes under /predict
-app.include_router(predict_router, prefix="/predict")
+app.include_router(predict_router)
 
 # ✅ CORS setup
 app.add_middleware(
