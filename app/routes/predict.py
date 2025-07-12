@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Query
 from app.services.simulation import predict_lap_time, simulate_race_pace  # ✅ import added
 
-router = APIRouter(prefix="/predict", tags=["Prediction"])
+router = APIRouter(tags=["Prediction"])
 
 @router.get("/lap_time")
 def get_lap_time(
