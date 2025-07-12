@@ -26,10 +26,10 @@ def predict_lap_time(driver: str, year: int, circuit: str, compound: str):
         avg_lap_time = sum(lap_times) / len(lap_times)
 
     except Exception as e:
-        print(f"ERROR: {e}")  # Debug info in console
-        avg_lap_time = 90.0 + random.uniform(-1.0, 1.0)  # fallback
+        print(f"[Lap Time Error] {e}")
+        avg_lap_time = 90.0 + random.uniform(-1.0, 1.0)  # fallback default
 
-    # Tyre time modifier
+    # Adjust for tyre compound
     tyre_modifier = {
         "soft": 0,
         "medium": 1.2,
@@ -38,12 +38,11 @@ def predict_lap_time(driver: str, year: int, circuit: str, compound: str):
 
     lap_time = avg_lap_time + tyre_modifier.get(compound.lower(), 0)
 
-    # ✅ Convert total seconds → mm:ss.sss format
+    # Format to mm:ss.sss
     minutes = int(lap_time // 60)
     seconds = lap_time % 60
-    formatted_time = f"{minutes}:{seconds:06.3f}"  # e.g., 1:29.317
+    formatted_time = f"{minutes}:{seconds:06.3f}"
 
-    # ✅ Final return
     return {
         "driver": driver,
         "year": year,
@@ -52,12 +51,11 @@ def predict_lap_time(driver: str, year: int, circuit: str, compound: str):
         "predicted_lap_time_seconds": round(lap_time, 3),
         "predicted_lap_time_formatted": formatted_time
     }
-    from app.services.ergast import fetch_driver_laps
-import random
 
 def simulate_race_pace(driver: str, year: int, circuit: str, compound: str, laps: int):
     try:
         data = fetch_driver_laps(driver, year, circuit)
+
         races = data["MRData"]["RaceTable"].get("Races", [])
         if not races:
             raise ValueError("No races found")
@@ -82,6 +80,7 @@ def simulate_race_pace(driver: str, year: int, circuit: str, compound: str, laps
         print(f"[Race Pace Error] {e}")
         avg_lap = 90.0 + random.uniform(-2.0, 2.0)
 
+    # Tyre impact
     tyre_modifier = {
         "soft": 0,
         "medium": 1.2,
