@@ -7,6 +7,11 @@ app = FastAPI()
 # ✅ Register the predict routes under /predict
 app.include_router(predict_router)
 
+# ✅ Root route for Render or uptime monitoring
+@app.get("/")
+def read_root():
+    return {"message": "F1 Simulator Backend is alive 🚀"}
+
 # ✅ CORS setup
 app.add_middleware(
     CORSMiddleware,
