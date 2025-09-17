@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import LapTimePrediction from "./components/LapTimePrediction";
 import RacePace from "./components/RacePace";
@@ -87,3 +86,54 @@ function App() {
 }
 
 export default App;
+
+// postcss.config.cjs
+module.exports = {
+  plugins: {
+    '@tailwindcss/postcss': {},
+    autoprefixer: {},
+  },
+}
+
+// tailwind.config.js
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./public/index.html",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        'f1-red': '#E10600',
+        'f1-yellow': '#FACC15',
+        'f1-black': '#222',
+      },
+      backgroundImage: {
+        'checkered-bg': "url('/checkered-bg.svg')",
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.5s ease-out forwards',
+        'fade-in-up': 'fadeInUp 0.5s ease-out forwards',
+        'pulse-slow': 'pulse 3s linear infinite',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        fadeInUp: {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
+    },
+  },
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/aspect-ratio'),
+  ],
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
