@@ -1,0 +1,14 @@
+{
+  "projects": [
+    {
+      "src": "f1-sim-ui",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rootDirectory": "f1-sim-ui"
+}
